@@ -109,8 +109,6 @@ def main():
         for j, episode_url in enumerate(season.episodes_urls):
             episode_number = j + 1
 
-            print(episode_url)
-
             # Если этот эпизод скачивать не нужно
             if (
                 season_number == season_from and episode_number < episode_from
