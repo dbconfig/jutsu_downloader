@@ -54,7 +54,12 @@ def main():
 
     # Название аниме
     anime_title = soup.find('h1', {'class': 'anime_padding_for_title'}).text
-    anime_title = anime_title.replace('Смотреть', '').replace('все серии и сезоны', '').strip()
+    anime_title = (
+        anime_title
+        .replace('Смотреть', '')
+        .replace('все серии', '')
+        .replace('и сезоны', '').strip()
+    )
     logger.info(f'Скачиваем: {anime_title}')
 
     # Весь сериал в одном объекте
@@ -64,6 +69,15 @@ def main():
             episodes_urls=[],
         ) for season_title in soup.find_all('h2', class_=['the-anime-season'])
     ]
+
+    # Если сезон всего один
+    if len(seasons) == 0:
+        seasons.append(
+            Season(
+                title=anime_title,
+                episodes_urls=[],
+            )
+        )
     logger.info(f'Сезонов: {len(seasons)}')
 
     # Все эпизоды
